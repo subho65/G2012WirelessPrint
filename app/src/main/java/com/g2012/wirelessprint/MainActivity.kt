@@ -168,14 +168,12 @@ class MainActivity : AppCompatActivity() {
             setPadding(0, 0, 0, 24)
         }
         tabSenderBtn = Button(this).apply {
-            text = "MAIN PHONE
-(Send & Print)"
+            text = "MAIN PHONE\n(Send & Print)"
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             setOnClickListener { showTab(isServer = false) }
         }
         tabServerBtn = Button(this).apply {
-            text = "SPARE PHONE
-(Printer Server)"
+            text = "SPARE PHONE\n(Printer Server)"
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             setOnClickListener { showTab(isServer = true) }
         }
@@ -302,10 +300,8 @@ class MainActivity : AppCompatActivity() {
         serverStatusText = TextView(this).apply {
             textSize = 16f
             setPadding(0, 24, 0, 24)
-            text = "1. Turn ON Hotspot on this Spare Phone (no SIM/data needed) OR join Wi-Fi.
-" +
-                   "2. Turn ON Canon G2012 & plug it in via OTG.
-" +
+            text = "1. Turn ON Hotspot on this Spare Phone (no SIM/data needed) OR join Wi-Fi.\n" +
+                   "2. Turn ON Canon G2012 & plug it in via OTG.\n" +
                    "3. Tap Start Printer Server below."
         }
 
@@ -386,8 +382,7 @@ class MainActivity : AppCompatActivity() {
                         .edit().putString("last_ip", foundIp).apply()
                     senderStatusText.text = "Connected! Found Spare Phone at $foundIp"
                 } else {
-                    senderStatusText.text = "Auto-find didn't see the Spare Phone yet.
-Make sure Spare Phone Server is ON, or type its IP above."
+                    senderStatusText.text = "Auto-find didn't see the Spare Phone yet.\nMake sure Spare Phone Server is ON, or type its IP above."
                 }
             }
         }
@@ -413,7 +408,7 @@ Make sure Spare Phone Server is ON, or type its IP above."
                 .edit().putString("last_ip", targetIp).apply()
         }
 
-        val runJob = {
+        val runJob: () -> Unit = {
             printBtn.isEnabled = false
             thread {
                 try {
@@ -466,7 +461,6 @@ Make sure Spare Phone Server is ON, or type its IP above."
     }
 
     private fun createTestPageBitmap(): Bitmap {
-        // 300 DPI A4 is 2480x3508; 150 DPI (1240x1754) is crisp & super fast for test page
         val bmp = Bitmap.createBitmap(1240, 1754, Bitmap.Config.ARGB_8888)
         val c = Canvas(bmp)
         c.drawColor(Color.WHITE)
@@ -487,8 +481,8 @@ Make sure Spare Phone Server is ON, or type its IP above."
     }
 
     private fun renderSelectedFileToBitmaps(uri: Uri, mime: String): List<Bitmap> {
-        val targetW = 1654 // ~200 DPI A4 width (sharp text, fast Wi-Fi transfer)
-        val targetH = 2339 // ~200 DPI A4 height
+        val targetW = 1654
+        val targetH = 2339
         val result = mutableListOf<Bitmap>()
 
         if (mime.contains("pdf") || uri.toString().lowercase().endsWith(".pdf")) {
@@ -614,8 +608,7 @@ Make sure Spare Phone Server is ON, or type its IP above."
 
     private fun updateServerUi() {
         val ip = NetworkUtils.getBestLocalIp()
-        serverIpText.text = "Spare Phone IP: $ip
-Port: ${PrintBridgeService.PRINT_PORT}"
+        serverIpText.text = "Spare Phone IP: $ip\nPort: ${PrintBridgeService.PRINT_PORT}"
         if (PrintBridgeService.isRunning) {
             serverToggleBtn.text = "Stop Printer Server"
             serverToggleBtn.setBackgroundColor(Color.parseColor("#C62828"))
